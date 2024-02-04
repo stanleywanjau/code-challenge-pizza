@@ -12,6 +12,14 @@ migrate=Migrate(app,db)
 db.init_app(app)
 api = Api(app)
 
+class Restaurants(Resource):
+    def get (self):
+        restaurant=[ {"id":restaurant.id,"name":restaurant.name,"address":restaurant.address}for restaurant in Restaurant.query.all()]   
+        return make_response(jsonify(restaurant),200) 
+
+
+api.add_resource(Restaurants,'/restaurants')    
+
 
 if __name__ == '__main__':
     app.run(port=5555,debug=True)

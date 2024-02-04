@@ -1,7 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import MetaData
 from sqlalchemy_serializer import SerializerMixin
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
 
 metadata = MetaData(naming_convention={
@@ -46,8 +46,8 @@ class Restaurant_pizza(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-@validates("price")
-def validates_price(self,key,price):
-    if not 1<= price <=30:
-        raise ValueError("price must be between 1 and 30")
-    return price
+    @validates("price")
+    def validates_price(self,key,price):
+        if not 1<= price <=30:
+            raise ValueError("price must be between 1 and 30")
+        return price
